@@ -10,12 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.tsci.coroutinesbus.R
 import com.tsci.coroutinesbus.core.EventBus
-import com.tsci.coroutinesbus.core.EventType
-import com.tsci.coroutinesbus.event.DataEvent
-import com.tsci.coroutinesbus.event.NameEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import com.tsci.coroutinesbus.event.Event
 
 class FirstFragment : Fragment() {
 
@@ -41,17 +36,17 @@ class FirstFragment : Fragment() {
         subscribeEvents()
     }
 
-    private fun initView(){
-        if (data.isNotBlank()){
+    private fun initView() {
+        if (data.isNotBlank()) {
             requireView().findViewById<TextView>(R.id.tvData).text = data
         }
-        if (name.isNotBlank()){
+        if (name.isNotBlank()) {
             requireView().findViewById<AppCompatTextView>(R.id.tvName).text = name
         }
     }
 
 
-    private fun initListeners(){
+    private fun initListeners() {
         requireView().findViewById<AppCompatButton>(R.id.btnSwitchFragment)
             .setOnClickListener {
                 requireActivity().supportFragmentManager
@@ -62,11 +57,11 @@ class FirstFragment : Fragment() {
             }
     }
 
-    private fun subscribeEvents(){
-        EventBus.subscribe<DataEvent>(scope = CoroutineScope(Dispatchers.IO), tag = DataEvent.TAG){
+    private fun subscribeEvents() {
+        EventBus.get().subscribe<Event.DataEvent> {
             data = it.data
         }
-        EventBus.subscribe<NameEvent>(scope = MainScope(), tag = EventType.TAG_NAME){
+        EventBus.get().subscribe<Event.NameEvent> {
             name = it.name
         }
     }

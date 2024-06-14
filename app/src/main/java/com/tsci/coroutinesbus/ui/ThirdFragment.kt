@@ -10,9 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.tsci.coroutinesbus.R
 import com.tsci.coroutinesbus.core.EventBus
-import com.tsci.coroutinesbus.core.EventType
-import com.tsci.coroutinesbus.event.DataEvent
-import com.tsci.coroutinesbus.event.NameEvent
+import com.tsci.coroutinesbus.event.Event
 
 
 class ThirdFragment : Fragment() {
@@ -42,8 +40,8 @@ class ThirdFragment : Fragment() {
             }
         requireView().findViewById<AppCompatButton>(R.id.btnSendData)
             .setOnClickListener {
-                EventBus.post(event = DataEvent(str), tag = DataEvent.TAG)
-                EventBus.post(event = NameEvent("Burak"), tag = EventType.TAG_NAME)
+                EventBus.get().post(event = Event.DataEvent(str))
+                EventBus.get().post(event = Event.NameEvent("Burak"))
             }
     }
 }

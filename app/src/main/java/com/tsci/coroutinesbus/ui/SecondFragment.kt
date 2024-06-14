@@ -9,10 +9,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import com.tsci.coroutinesbus.R
 import com.tsci.coroutinesbus.core.EventBus
-import com.tsci.coroutinesbus.core.EventType
-import com.tsci.coroutinesbus.event.DataEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.tsci.coroutinesbus.event.Event
 
 
 class SecondFragment : Fragment() {
@@ -55,10 +52,7 @@ class SecondFragment : Fragment() {
     }
 
     private fun subscribeEvents() {
-        EventBus.subscribe<DataEvent>(
-            scope = CoroutineScope(Dispatchers.IO),
-            tag = EventType.TAG_DATA
-        ) {
+        EventBus.get().subscribe<Event.DataEvent>{
             data = it.data
         }
     }
